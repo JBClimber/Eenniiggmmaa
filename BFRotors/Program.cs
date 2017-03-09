@@ -17,7 +17,11 @@ namespace BFRotors
             int[,] order = CreateRotorOrder(8);
             int[,] grdSet = CreateGroundSets();
 
-            Console.WriteLine("What the fuck");
+            BFrotors(order, "hello", "JMRRVTFNPB");
+            BFrotorsEveryTwo(order, "hello", "JMRRVTFNPB");
+
+            BFrotors(order, "world", "JMRRVTFNPB");
+            BFrotorsEveryTwo(order, "world", "JMRRVTFNPB");
 
             CompleteBeep();
 
@@ -46,7 +50,7 @@ namespace BFRotors
 
             for (int orderRow = 1; orderRow < order.GetLength(0); orderRow++) {
 
-                Console.WriteLine("Checking row: " + orderRow);
+                //Console.WriteLine("Checking row: " + orderRow);
 
                 for (int gpl = 0; gpl <= 25; gpl++)      // ground position of left rotor
                 {
@@ -120,8 +124,7 @@ namespace BFRotors
 
             for (int orderRow = 1; orderRow < order.GetLength(0); orderRow += 2)
             {
-
-                Console.WriteLine("Checking row: " + orderRow);
+                //Console.WriteLine("Checking row: " + orderRow);
 
                 for (int gpl = 0; gpl <= 25; gpl++)      // ground position of left rotor
                 {

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BruteForceGroundSetting", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma", "Enigma\WindowsFormsApplication1\Enigma.csproj", "{4EC9B61F-6739-4B6D-BCFE-2607930D5A06}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFRotors", "BFRotors\BFRotors.csproj", "{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4EC9B61F-6739-4B6D-BCFE-2607930D5A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EC9B61F-6739-4B6D-BCFE-2607930D5A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EC9B61F-6739-4B6D-BCFE-2607930D5A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

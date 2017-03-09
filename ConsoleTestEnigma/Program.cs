@@ -25,69 +25,6 @@ namespace ConsoleTestEnigma
             Console.ReadLine();
         }
 
-        public void CryptoTextFiles()
-        {
-            Enigma.Machine.Rotor rl;
-            Enigma.Machine.Rotor rm;
-            Enigma.Machine.Rotor rr;
-            
-            for (int c = 65; c <= 90; c++)
-            {
-                string letter = Convert.ToChar(c).ToString().ToLower();
-                StreamWriter file = new System.IO.StreamWriter("C:\\Users\\JiB\\Desktop\\enigmaMapsNumeric\\Test" + letter.ToUpper() + "num2.txt");
-
-                Stopwatch timer2 = new Stopwatch();
-                timer2.Start();
-
-                string line = "";
-                int count = 0;  // count for all possible calculations
-
-                int currentPosL = 0;
-                int currentPosM = 0;
-                int currentPosR = 0;
-
-                for (int i = 65; i <= 90; i++)      // 3 loops for rotor ground settings A -> Z
-                {
-                    for (int j = 65; j <= 90; j++)
-                    {
-                        for (int k = 65; k <= 90; k++)
-                        {
-                            count++;
-
-                            currentPosL = i - 65;
-                            currentPosM = j - 65;
-                            currentPosR = k - 65;
-
-                            rl = new Enigma.Machine.Rotor("III", currentPosL, 0);   //  left rotor III, A -> Z, ring setting a. 
-                            rm = new Enigma.Machine.Rotor("II", currentPosM, 0);    //  middle rotor II, A -> Z, ring setting a.
-                            rr = new Enigma.Machine.Rotor("I", currentPosR, 0);     //  right rotor I, A -> Z, ring setting a.
-
-                            // plug board is set to: no plugs used
-                            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
-
-                            // mirror position is set to "B" and entry rotor is set to "O"
-                            Enigma.Machine.MachineRun ma = new Enigma.Machine.MachineRun("B", rl, rm, rr, "O", plugs);
-                            currentPosL = rl.GetCpos();
-                            currentPosM = rm.GetCpos();
-                            currentPosR = rr.GetCpos();
-
-                            line = letter + ":" + currentPosL + "," + currentPosM + "," + currentPosR + ":" + ma.EncryptDecrypt(letter).ToLower() + ";\tnext:"+rl.GetCpos()+","+rm.GetCpos()+","+rr.GetCpos()+"\n";
-                            Console.WriteLine(line);
-                            file.WriteLine(line);
-                            file.Flush();
-                        }
-                    }
-                }
-                file.WriteLine("\r\n\r\n" + count);
-                timer2.Stop();
-                long sec = timer2.ElapsedMilliseconds / 1000;
-                long mil = timer2.ElapsedMilliseconds % 1000;
-                file.WriteLine(sec + "." + mil + " seconds");
-                file.Flush();
-                file.Close();
-            }
-        }
-
         public void TestOdometer()
         {
             StreamWriter file = new StreamWriter("C:\\Users\\JiB\\Desktop\\odometerTest.txt");

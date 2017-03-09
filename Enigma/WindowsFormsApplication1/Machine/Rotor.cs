@@ -9,10 +9,10 @@ namespace Enigma.Machine
     public class Rotor
     {
         private int[] rotor;
-        private int cPos;   //curent position
+        private int cPos;   //curent position   0 -> 25
         private int tOver1;  // 1st turn over position
         private int tOver2;  // 2nd turn over position
-        private int sRing;  // ring setting
+        private int sRing;  // ring setting     0 -> 25
         private int n;      // rotor number in int ("I", ..., "Gamma")
 
         public Rotor(string n, int sPos, int sRing)    // n = which rotor, sPos = starting position, sRing = ring position

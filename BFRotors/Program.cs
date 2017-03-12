@@ -14,18 +14,43 @@ namespace BFRotors
     {
         static void Main(string[] args)
         {
-            int[,] order = CreateRotorOrder(8);
-            int[,] grdSet = CreateGroundSets();
+            int[,] order = CreateRotorOrder(8);     // creates orders of rotors
+            //Print(order);
+            int[,] grdSet = CreateGroundAndRingSets();     // creates orders of ground settings and/or ring settings
+            //Print(grdSet);
+            int[,] ringSet = CreateGroundAndRingSets();
 
-            BFrotors(order, "hello", "JMRRVTFNPB");
+            /*BFrotors(order, "hello", "JMRRVTFNPB");
             BFrotorsEveryTwo(order, "hello", "JMRRVTFNPB");
-
             BFrotors(order, "world", "JMRRVTFNPB");
-            BFrotorsEveryTwo(order, "world", "JMRRVTFNPB");
+            BFrotorsEveryTwo(order, "world", "JMRRVTFNPB");*/
+
+            // run this during tutoring
+            /*BFrotors(order, "weather", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();
+            BFrotorsEveryTwo(order, "weather", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();
+            BFrotors(order, "report", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();
+            BFrotorsEveryTwo(order, "report", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();*/
+
+            //BFrotorsANDgroundset(order, grdSet, "weather", "JZTPBMCJMIITBRJBJM");
+
+            /*ParallelRotorGround(order, grdSet, "hello", "JMRRVTFNPB");
+            ParallelRotorGround(order, grdSet, "world", "JMRRVTFNPB");
+            PartCompleteBeep();
+            ParallelRotorGround(order, grdSet, "weather", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();
+            ParallelRotorGround(order, grdSet, "report", "JZTPBMCJMIITBRJBJM");
+            PartCompleteBeep();
+            ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
+
+            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "PCDUKQQDPF");
 
             CompleteBeep();
 
-            Console.WriteLine(" test complete ");
+            Console.WriteLine(" - - -  TEST COMPLETE  - - -");
             Console.ReadKey();
         }
 
@@ -144,10 +169,10 @@ namespace BFRotors
                             ma_1 = new MachineRun("B", rl_1, rm_1, rr_1, "O", plugs);
                             ma_2 = new MachineRun("B", rl_2, rm_2, rr_2, "O", plugs);
 
-                            decMsg_1 = ProcessOrder1(ma_1, msg);
+                            decMsg_1 = ma_1.EncryptDecrypt(msg);
                             count++;
 
-                            decMsg_2 = ProcessOrder1(ma_2, msg);
+                            decMsg_2 = ma_2.EncryptDecrypt(msg);
                             count++;
 
                             //Console.WriteLine(order[orderRow, 1]+":"+ order[orderRow, 2]+":"+order[orderRow, 3]+":"+gpl+":"+gpm+":"+gpr);
@@ -186,11 +211,14 @@ namespace BFRotors
 
         public static void BFrotorsANDgroundset(int[,] order, int[,] grdSet, string cryb, string msg)
         {   // uses brute force on rotor order and ground settings
-            // order set and ground setting set are created previously
+            // order set and ground setting set are created previously (order array and grdSet array)
 
+            MachineRun ma;
+            // plug board is set to: no plugs used
+            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
             Rotor rl, rm, rr;
 
-            StreamWriter file = new StreamWriter("C:\\EnigmaTests\\Stopwatch\\BFrotorsANDgroundset\\Test_B_orderANDgrdSet_" + cryb + ".txt");
+            StreamWriter file = new StreamWriter("C:\\EnigmaTests\\Stopwatch\\BFrotorsANDgroundset\\BFrotorANDgroundset_B_orderANDgrdSet_" + cryb + ".txt");
 
             file.WriteLine("\ncryb: " + cryb);
             file.WriteLine("\n msg: " + msg + "\r\n");
@@ -204,6 +232,7 @@ namespace BFRotors
 
             for (int ord = 1; ord < order.GetLength(0); ord++)      // order set row
             {
+                Console.WriteLine("running code for row: "+ord);
                 for (int grd = 1; grd < grdSet.GetLength(0); grd++) // grdSet set row
                 {
                     count++;
@@ -214,11 +243,8 @@ namespace BFRotors
                     rm = new Rotor(order[ord, 2], grdSet[grd, 2], 0);      //  middle rotor , A -> Z, ring setting a.
                     rr = new Rotor(order[ord, 3], grdSet[grd, 3], 0);      //  right rotor , A -> Z, ring setting a.
 
-                    // plug board is set to: no plugs used
-                    string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
-
                     // mirror position is set to "B" and entry rotor is set to "O"
-                    Enigma.Machine.MachineRun ma = new Enigma.Machine.MachineRun("B", rl, rm, rr, "O", plugs);
+                    ma = new MachineRun("B", rl, rm, rr, "O", plugs);
                     string decMsg = ma.EncryptDecrypt(msg);
 
                     if (decMsg.Contains(cryb.ToUpper()))
@@ -240,11 +266,148 @@ namespace BFRotors
             file.Close();
         }
 
-        public static string ProcessOrder1(MachineRun ma, string msg)
+        public static void ParallelRotorGround(int[,] order, int[,] grdSet, string cryb, string msg)
+        {   // uses parralel code for BF rotors and ground settings
+
+            StreamWriter file = new StreamWriter("C:\\EnigmaTests\\Stopwatch\\MC\\ParallelRotorGround\\B_rotorrANDgrdSet_" + cryb + ".txt");
+
+            file.WriteLine("\ncryb: " + cryb);
+            file.WriteLine("\n msg: " + msg + "\r\n");
+            file.Flush();
+
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
+            int count = 0;  // count for all possible calculations
+
+            for (int ord = 1; ord < order.GetLength(0); ord++)      // order set row
+            {
+                //Console.WriteLine("running code for row: " + ord);
+                //Console.WriteLine(order[ord, 1] + ":" + order[ord, 2] + ":" + order[ord, 3]);
+                List<Task> tasks = new List<Task>();
+                for (int grd = 1; grd < grdSet.GetLength(0); grd++) // grdSet set row
+                {
+                    count++;
+                    //Console.WriteLine(order[orderRow, 1] + ":" + order[orderRow, 2] + ":" + order[orderRow, 3] + ":" + gpl + ":" + gpm + ":" + gpr);
+                    int rsl = order[ord, 1], rsm = order[ord, 2], rsr = order[ord, 3];
+                    int gsl = grdSet[grd, 1], gsm = grdSet[grd, 2], gsr = grdSet[grd, 3];
+
+                    Task t = new Task( () => {
+                        MachineRotorGround(rsl, rsm, rsr, gsl, gsm, gsr, cryb, msg, file);
+                    });
+                    t.Start();
+                    tasks.Add(t);
+
+                }
+                Task.WaitAll(tasks.ToArray());
+            }
+
+
+            file.WriteLine("\r\n\r\n" + count);
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+
+            file.WriteLine("running time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10);
+            file.Flush();
+            file.Close();
+
+        }
+
+        public static void ParallelRotorGroundRing(int[,] order, int[,] grdSet, int[,] ringSet, string cryb, string msg)
         {
-            string r = ma.EncryptDecrypt(msg);
-            //Console.WriteLine(r);
-            return r;
+            StreamWriter file = new StreamWriter("C:\\EnigmaTests\\Stopwatch\\MC\\ParallelRotorGroundRing\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
+
+            file.WriteLine("\ncryb: " + cryb);
+            file.WriteLine("\n msg: " + msg + "\r\n");
+            file.Flush();
+
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
+            int count = 0;  // count for all possible calculations
+
+            for (int o = 1; o < order.GetLength(0); o++)      // o = row of rotor setting
+            {
+                int oo = o;     // reassigns the variable for parallel processing
+                int rsl = order[oo, 1], rsm = order[oo, 2], rsr = order[oo, 3];
+
+                for (int g = 1; g < grdSet.GetLength(0); g++)   // g = row of the ground setting
+                {
+                    int gg = g;     // reassigns the variable for parallel processing
+                    int gsl = grdSet[gg, 1], gsm = grdSet[gg, 2], gsr = grdSet[gg, 3];
+                    //Console.WriteLine("running code for row: " + o);
+                    //Console.WriteLine(order[ord, 1] + ":" + order[ord, 2] + ":" + order[ord, 3]);
+                    List<Task> tasks = new List<Task>();
+                    for (int r = 1; r < ringSet.GetLength(0); r++) // r = row of the ring setting
+                    {
+                        count++;
+                        int rr = r;     // reassigns the variable for parallel processing
+                        //Console.WriteLine(order[orderRow, 1] + ":" + order[orderRow, 2] + ":" + order[orderRow, 3] + ":" + gpl + ":" + gpm + ":" + gpr);
+                        //int rsl = order[o, 1], rsm = order[o, 2], rsr = order[o, 3];
+                        //int gsl = grdSet[g, 1], gsm = grdSet[g, 2], gsr = grdSet[g, 3];
+                        int ringl = ringSet[rr, 1], ringm = ringSet[rr, 2], ringr = ringSet[rr, 3];
+
+                        Task t = new Task(() => {
+                            MachineRotorGroundRing(rsl, rsm, rsr, gsl, gsm, gsr, ringl, ringm, ringr, cryb, msg, file);
+                        });
+                        t.Start();
+                        tasks.Add(t);
+
+                    }
+                    Task.WaitAll(tasks.ToArray());
+                }
+            }
+
+
+            file.WriteLine("\r\n\r\n" + count);
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+
+            file.WriteLine("running time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10);
+            file.Flush();
+            file.Close();
+        }
+
+        public static void MachineRotorGround(int rsl, int rsm, int rsr, int gsl, int gsm, int gsr, string cryb, string msg, StreamWriter file)
+        {
+            //Console.WriteLine("working task ..."+rsl+":"+rsm+":"+rsr+"|"+gsl+"."+gsm+"."+gsr);
+
+            // plug board is set to: no plugs used
+            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
+
+            // mirror position is set to "B" and entry rotor is set to "O"
+            MachineRun ma = new MachineRun("B", new Rotor(rsl, gsl, 0), new Rotor(rsm, gsm, 0), new Rotor(rsr, gsr, 0), "O", plugs);
+            string decMsg = ma.EncryptDecrypt(msg);
+
+            if (decMsg.Contains(cryb.ToUpper()))
+            {
+                string line = "FOUND at rotor order: " + rsl + rsm + rsr + "  at GS: " + gsl + "." + gsm + "." + gsr;
+                line += Environment.NewLine + "decoded: " + decMsg;
+                Console.WriteLine(line);
+                file.WriteLine(line);
+                file.Flush();
+            }
+        }
+
+        public static void MachineRotorGroundRing(int rsL, int rsM, int rsR, int gsL, int gsM, int gsR, int ringL, int ringM, int ringR, string cryb, string msg, StreamWriter file)
+        {
+            //Console.WriteLine("working task ..."+rsL+":"+rsM+":"+rsR+"|"+gsL+"."+gsM+"."+gsR+"|"+ringL+"."+ringM+"."+ringR);
+
+            // plug board is set to: no plugs used
+            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
+
+            // mirror position is set to "B" and entry rotor is set to "O"
+            MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);
+            string decMsg = ma.EncryptDecrypt(msg);
+            Console.WriteLine("msg: "+decMsg);
+            if (decMsg.Contains(cryb.ToUpper()))
+            {
+                string line = "" + rsL + rsM + rsR + "|" + gsL + "." + gsM + "." + gsR + "|" + ringL + "." + ringM + "." + ringR;
+                line += Environment.NewLine + "decoded: " + decMsg;
+                Console.WriteLine(line);
+                file.WriteLine(line);
+                file.Flush();
+            }
         }
 
         public static int[,] CreateRotorOrder(int o)
@@ -274,9 +437,10 @@ namespace BFRotors
             return order;
         }
 
-        public static int[,] CreateGroundSets()
+        public static int[,] CreateGroundAndRingSets()
         {   // creates complete set of possible ground settings per rotor three rotors
             //  note: first setting starts at 1,1 NOT 0,0
+            // 
             int rows = 26 * 26 * 26 + 1;
             int[,] grdSet = new int[rows, 4];
             int gsl, gsm, gsr;      // ground setting left rotor, ground setting middle rotor, ground setting right rotor.
@@ -304,7 +468,6 @@ namespace BFRotors
         {
             for (int i = 1; i < order.GetLength(0); i++)
             {
-
                 Console.WriteLine("row "+i+"   "+order[i,1]+":"+order[i,2]+":"+order[i,3]);
             }
         }
@@ -321,7 +484,15 @@ namespace BFRotors
             Console.Beep(5000, 500);
             Console.Beep(2000, 500);
             Console.Beep(500, 1500);
+        }
 
+        public static void PartCompleteBeep()
+        {
+            Console.Beep(5000, 250);
+            Console.Beep(5000, 250);
+            Console.Beep(5000, 250);
+            Console.Beep(5000, 250);
+            Console.Beep(5000, 250);
         }
 
     }

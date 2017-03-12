@@ -15,8 +15,9 @@ namespace Enigma.Machine
         private int sRing;  // ring setting     0 -> 25
         private int n;      // rotor number in int ("I", ..., "Gamma")
 
-        public Rotor(string n, int sPos, int sRing)    // n = which rotor, sPos = starting position, sRing = ring position
-        {   // rotor wireing referenced from www.cryptomuseum.com
+        public Rotor(string n, int sPos, int sRing)
+        {   // n = which rotor, sPos = starting position, sRing = ring position
+            // rotor wireing referenced from www.cryptomuseum.com
             if (n.Equals("I"))
             {
                 SetChooseRotor(1);
@@ -126,23 +127,28 @@ namespace Enigma.Machine
 	    }
 
         public int GetCpos()
-        {
+        {   // returns current ground position
             return this.cPos;
         }
 
         public int GetTover1()
-        {
+        {   // returns first turn over position
             return this.tOver1;
         }
 
         public int GetTover2()
-        {
+        {   // returns second turn over position
             return this.tOver2;
         }
 
         public int GetN()
-        {
+        {   // returns rotor number
             return this.n;
+        }
+
+        public int GetsRing()
+        {   // returns the ring position
+            return this.sRing;
         }
 
         public void AdvanceRotor()

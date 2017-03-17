@@ -16,9 +16,9 @@ namespace BFRotors
         {
             int[,] order = CreateRotorOrder(8);     // creates orders of rotors
             //Print(order);
-            int[,] grdSet = CreateGroundAndRingSets();     // creates orders of ground settings and/or ring settings
+            int[,] grdSet = CreateGroundOrRingSets();     // creates orders of ground settings and/or ring settings
             //Print(grdSet);
-            int[,] ringSet = CreateGroundAndRingSets();
+            int[,] ringSet = CreateGroundOrRingSets();
 
             /*BFrotors(order, "hello", "JMRRVTFNPB");
             BFrotorsEveryTwo(order, "hello", "JMRRVTFNPB");
@@ -437,7 +437,7 @@ namespace BFRotors
             return order;
         }
 
-        public static int[,] CreateGroundAndRingSets()
+        public static int[,] CreateGroundOrRingSets()
         {   // creates complete set of possible ground settings per rotor three rotors
             //  note: first setting starts at 1,1 NOT 0,0
             // 

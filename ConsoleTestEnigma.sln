@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigma", "Enigma\WindowsFor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFRotors", "BFRotors\BFRotors.csproj", "{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BFRotorGroundPlug", "BFRotorGroundPlug\BFRotorGroundPlug.csproj", "{7990F684-09A8-4C9A-8C0F-CEF002C23EB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA1F8D6-7BA0-46BD-B251-768EC8F6D35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7990F684-09A8-4C9A-8C0F-CEF002C23EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7990F684-09A8-4C9A-8C0F-CEF002C23EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7990F684-09A8-4C9A-8C0F-CEF002C23EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7990F684-09A8-4C9A-8C0F-CEF002C23EB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

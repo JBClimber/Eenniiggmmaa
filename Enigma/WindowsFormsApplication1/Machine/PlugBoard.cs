@@ -23,7 +23,8 @@ namespace Enigma.Machine
         }
 
         private void SetPlugs(string[] l)
-        {
+        {   // takes a string array of length 26
+
             for (int i = 0; i < l.Length/2; i++)
             {
                 if (l[i*2]!=null && l[i*2+1]!=null)

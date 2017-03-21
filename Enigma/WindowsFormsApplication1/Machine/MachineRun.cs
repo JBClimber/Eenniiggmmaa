@@ -29,7 +29,7 @@ namespace Enigma.Machine
             this.mRotor = mR;
             this.rRotor = rR;
             this.eRotor = new EntryRotor(ern);
-            Console.WriteLine(lR.GetN()+":"+mR.GetN()+":"+rR.GetN()+"|"+lR.GetCpos()+"."+mR.GetCpos()+"."+rR.GetCpos()+"|"+lR.GetsRing()+"."+mR.GetsRing()+"."+rR.GetsRing());
+            //Console.WriteLine(lR.GetN()+":"+mR.GetN()+":"+rR.GetN()+"|"+lR.GetCpos()+"."+mR.GetCpos()+"."+rR.GetCpos()+"|"+lR.GetsRing()+"."+mR.GetsRing()+"."+rR.GetsRing());
         }
         public MachineRun(string m, Rotor m4, Rotor lR, Rotor mR, Rotor rR, string ern, string[] indPlugs)
         {

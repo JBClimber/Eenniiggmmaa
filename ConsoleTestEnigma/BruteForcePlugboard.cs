@@ -22,7 +22,7 @@ namespace ConsoleTestEnigma
             //    return;
             //}
 
-            int w=3;
+            int w=1;
             int p=26;
 
             //bool check1 = int.TryParse(args[0], out w);
@@ -46,7 +46,7 @@ namespace ConsoleTestEnigma
 
             BruteForcePlugboard bfp = new BruteForcePlugboard();
 
-            StreamWriter file = new System.IO.StreamWriter("D:\\ET\\bfOnPlugboardUsingLetters\\BruteForcePlugboard_"+p+"per"+w+"wires_ABC.txt");
+            StreamWriter file = new StreamWriter("D:\\ET\\bfOnPlugboardUsingLetters\\BruteForcePlugboard_"+p+"per"+w+"wires_ABC.txt");
 
             int[] plugs = new int[p];
 
@@ -55,7 +55,7 @@ namespace ConsoleTestEnigma
 
             bfp.PlugBoardSettings(w, 0, 0, plugs, file);
             Console.WriteLine("\n\ncount: "+count);
-            file.WriteLine("END_FILE\n\ncount: " + count);
+            //file.WriteLine("END_FILE\n\ncount: " + count);
 
             timer2.Stop();
             long sec = timer2.ElapsedMilliseconds / 1000;
@@ -66,8 +66,8 @@ namespace ConsoleTestEnigma
             long mil = timer2.ElapsedMilliseconds % 1000;
             Console.WriteLine("completed in: "+hours+":"+min+":"+sec + "." + mil);
 
-            file.WriteLine("completed in: " + hours + ":" + min + ":" + sec + "." + mil);
-            file.Flush();
+            //file.WriteLine("completed in: " + hours + ":" + min + ":" + sec + "." + mil);
+            //file.Flush();
 
             Console.Beep();
             Console.Beep();

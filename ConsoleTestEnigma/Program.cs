@@ -17,12 +17,14 @@ namespace ConsoleTestEnigma
             //cte.CryptoTextFiles();
             //cte.BruteForceCrib("", "hello", 8, "B");
 
-            DataSQLcreation dsc = new DataSQLcreation();
-            dsc.CreateData();
+            //DataSQLcreation dsc = new DataSQLcreation();
+            //dsc.CreateData();
 
             //cte.TestOdometer();
-            Console.WriteLine("press enter to exit ...");
-            Console.ReadLine();
+            BruteForcePlugboard b = new BruteForcePlugboard();
+
+            //Console.WriteLine("press enter to exit ...");
+            //Console.ReadLine();
         }
 
         public void TestOdometer()

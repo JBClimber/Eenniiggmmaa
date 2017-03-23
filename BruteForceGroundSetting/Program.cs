@@ -27,7 +27,7 @@ namespace BruteForceGroundSetting
         {   // gs = ground setting transmited in the clear (consists of 3 letters)
             // egs = encrypted ground setting (consists of 6 letters)
 
-            StreamWriter file = new System.IO.StreamWriter("D:\\ET\\bfOnGroundSetting\\BruteForceOnGroundSetting_"+gs+".txt");
+            StreamWriter file = new System.IO.StreamWriter("D:\\ET\\bfOnGroundSetting\\BruteForceOnSIXletters_"+gs+"_2nd.txt");
 
             Stopwatch timer2 = new Stopwatch();
             timer2.Start();

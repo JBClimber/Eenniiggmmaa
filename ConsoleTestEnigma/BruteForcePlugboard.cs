@@ -22,7 +22,7 @@ namespace ConsoleTestEnigma
             //    return;
             //}
 
-            int w=3;
+            int w=1;
             int p=26;
 
             //bool check1 = int.TryParse(args[0], out w);

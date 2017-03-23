@@ -109,6 +109,8 @@ namespace BFRotorGroundPlug
             string time = ElapsedTime(timer);
             Console.WriteLine(time);
             fileOut.WriteLine(time);
+            fileOut.Flush();
+            fileOut.Close();
 
             CompleteBeep();
             Console.WriteLine("\r\n... press enter to exit ...");

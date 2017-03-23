@@ -21,19 +21,19 @@ namespace BFRotorGroundPlug
             // enter file and path to save to
             StreamWriter fileOut = CreateSaveFile();
 
-            // enter number of wires
-            int wires = 1;// NumberOfWires();
+            // enter number of wires (0 - 13)
+            int wires = NumberOfWires();
 
-            // enter number of rotors to check  ( 1 through ?) max is 8
-            int numOfRotors = 3;// NumberOfRotors();
+            // enter number of rotors to check  ( 3 through ?) max is 8
+            int numOfRotors = NumberOfRotors();
 
             // enter cryb
             Console.Write("\nenter cryb: ");
-            string cryb = "helloworld";// Console.ReadLine();
+            string cryb = Console.ReadLine();
 
             // enter message
             Console.Write("\nenter msg: ");
-            string msg = "VKHZQPADBN";// Console.ReadLine();
+            string msg = Console.ReadLine();
 
             fileOut.WriteLine("cryb: "+cryb);
             fileOut.WriteLine(" msg: "+msg);
@@ -56,16 +56,15 @@ namespace BFRotorGroundPlug
                 {
                     string[] plugs = new string[26];
                     // reads the plugs from file
-                    for (int i=1; i<=wires; i++)
+                    for (int i=0; i<(wires*2); i++)
                     {
-                        plugs[i - 1] = fileIn.ReadChar().ToString();
                         plugs[i] = fileIn.ReadChar().ToString();
                     }
-                    PrintPlugs(plugs);
+                    Console.WriteLine(PrintPlugs(plugs));
 
                     for (int o = 1; o < order.GetLength(0); o++)      // loop for the rotor order
                     {
-                        //List<Task> tasks = new List<Task>();
+                        List<Task> tasks = new List<Task>();
                         for (int g = 1; g < ground.GetLength(0); g++)
                         {
                             int oo = o;     // reassigns the variable for parallel processing
@@ -76,15 +75,15 @@ namespace BFRotorGroundPlug
 
                             //Console.WriteLine(rsl + ":" + rsm + ":" + rsr + "|" + gsl + ":" + gsm + ":" + gsr + "|");
                             //fileOut.Flush();
-                            //Task t = new Task(() =>
-                            //{
+                            Task t = new Task(() =>
+                            {
                                 MachineRotorGroundPlug(rsl, rsm, rsr, gsl, gsm, gsr, plugs, cryb, msg, fileOut);
-                            //});
-                            //t.Start();
-                            //tasks.Add(t);
+                            });
+                            t.Start();
+                            tasks.Add(t);
 
                         }
-                        //Task.WaitAll(tasks.ToArray());
+                        Task.WaitAll(tasks.ToArray());
                     }
 
 
@@ -99,8 +98,6 @@ namespace BFRotorGroundPlug
             {
                 // close files
                 fileIn.Close();
-                fileOut.Flush();
-                fileOut.Close();
             }
 
             Console.WriteLine("COUNT: "+count);
@@ -109,7 +106,9 @@ namespace BFRotorGroundPlug
             timer.Stop();
 
             // calculate and show elapsed time
-            ElapsedTime(timer);
+            string time = ElapsedTime(timer);
+            Console.WriteLine(time);
+            fileOut.WriteLine(time);
 
             CompleteBeep();
             Console.WriteLine("\r\n... press enter to exit ...");
@@ -118,12 +117,13 @@ namespace BFRotorGroundPlug
 
         public static BinaryReader GetFileAndPath()
         {   // returns file that exists
+            // if the file to be read does not exist it askes for a new path/file
 
-            string file = @"D:\ET\bfOnPlugboardUsingLetters\BruteForcePlugboard_26per1wires_ABC.txt";
+            string file = "";   // @"D:\ET\bfOnPlugboardUsingLetters\BruteForcePlugboard_26per2wires_ABC.txt";
             do
             {
                 Console.Write("read from (file and path): ");
-                //file = Console.ReadLine();
+                file = Console.ReadLine();
             } while (!File.Exists(file));
 
             BinaryReader br = new BinaryReader(File.Open(file, FileMode.Open));
@@ -131,13 +131,15 @@ namespace BFRotorGroundPlug
         }
 
         public static StreamWriter CreateSaveFile()
-        {
-            string file = @"E:\Enigma\BF\RotorGroundPlug\Test1_Wires1.txt";
-            //do
-            //{
+        {   // creates a save file and returns it
+            // if it exists it askes for a new filename/path
+
+            string file = "";   // @"D:\Test2_Wires2.txt";
+            do
+            {
                 Console.Write("save to (file and path): ");
-                //file = Console.ReadLine();
-            //} while (File.Exists(file));
+                file = Console.ReadLine();
+            } while (File.Exists(file));
 
             StreamWriter sw = File.CreateText(file);
             return sw;
@@ -145,6 +147,7 @@ namespace BFRotorGroundPlug
 
         public static int NumberOfWires()
         {   // returns correct number of wires
+            // 0 -> 13 wires possible
 
             int wires = 0;
             bool isConverted = false;
@@ -152,6 +155,10 @@ namespace BFRotorGroundPlug
             {
                 Console.Write("\nenter number of available wires: ");
                 isConverted = Int32.TryParse(Console.ReadLine(), out wires);
+                if (wires <0 || wires >13)
+                {
+                    isConverted = false;
+                }
             } while (!isConverted);
 
             return wires;
@@ -159,6 +166,7 @@ namespace BFRotorGroundPlug
 
         public static int NumberOfRotors()
         {   //  return number of rotors to check
+            // 3 -> 8 rotors possible
 
             bool isConverted = false;
             int numRotors = 0;
@@ -166,7 +174,7 @@ namespace BFRotorGroundPlug
             {
                 Console.Write("\nenter number of rotors to check: ");
                 isConverted = Int32.TryParse(Console.ReadLine(), out numRotors);
-                if (numRotors <= 0 || numRotors >= 9)
+                if (numRotors <= 2 || numRotors >= 9)
                 {
                     isConverted = false;
                 }
@@ -238,15 +246,16 @@ namespace BFRotorGroundPlug
             //Console.WriteLine(rsl + ":" + rsm + ":" + rsr + "|" + gsl + ":" + gsm + ":" + gsr + "|");
             if (decMsg.Equals(cryb.ToUpper()))
             {
-                string line = "FOUND at rotor order: " + rsl + rsm + rsr + "  at GS: " + gsl + "." + gsm + "." + gsr +" plugs: "+ plugs[0]+plugs[1];
+                string line = "FOUND at rotor order: " + rsl + rsm + rsr + "  at GS: " + gsl + "." + gsm + "." + gsr + "|"+PrintPlugs(plugs);
                 line += Environment.NewLine + "decoded: " + decMsg;
                 Console.WriteLine(line);
+                //PrintPlugs(plugs);
                 fileOut.WriteLine(line);
                 fileOut.Flush();
             }
         }
 
-        public static void PrintPlugs(string[] p)
+        public static string PrintPlugs(string[] p)
         {   // prints string array to console
 
             string outS = "";
@@ -261,13 +270,13 @@ namespace BFRotorGroundPlug
                     outS += s + " ";
                 }
             }
-            Console.WriteLine ("plugs: " + outS);
+            return ("plugs: " + outS);
         }
 
-        public static void ElapsedTime(Stopwatch timer)
+        public static string ElapsedTime(Stopwatch timer)
         {
             TimeSpan t = timer.Elapsed;
-            Console.WriteLine("running time at " + t.Days + ":" + t.Hours + ":" + t.Minutes + ":" + t.Seconds + "." + t.Milliseconds / 10);
+            return ("running time at " + t.Days + ":" + t.Hours + ":" + t.Minutes + ":" + t.Seconds + "." + t.Milliseconds / 10);
         }
 
         public static void CompleteBeep()
@@ -277,11 +286,6 @@ namespace BFRotorGroundPlug
             Console.Beep(5000, 500);
             Console.Beep(2000, 500);
             Console.Beep(500, 1500);
-            //Console.Beep(5000, 500);
-            //Console.Beep(2000, 500);
-            //Console.Beep(5000, 500);
-            //Console.Beep(2000, 500);
-            //Console.Beep(500, 1500);
         }
     }
 }

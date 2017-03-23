@@ -315,7 +315,7 @@ namespace BFRotors
 
         public static void ParallelRotorGroundRing(int[,] order, int[,] grdSet, int[,] ringSet, string cryb, string msg)
         {
-            StreamWriter file = new StreamWriter("C:\\EnigmaTests\\Stopwatch\\MC\\ParallelRotorGroundRing\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
+            StreamWriter file = new StreamWriter("D:\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
 
             file.WriteLine("\ncryb: " + cryb);
             file.WriteLine("\n msg: " + msg + "\r\n");

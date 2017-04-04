@@ -12,9 +12,10 @@ namespace BFRotors
 {
     class Program
     {
+        static ulong totalFound = 0;
         static void Main(string[] args)
         {
-            int[,] order = CreateRotorOrder(8);     // creates orders of rotors
+            int[,] order = CreateRotorOrder(3);     // creates orders of rotors
             //Print(order);
             int[,] grdSet = CreateGroundOrRingSets();     // creates orders of ground settings and/or ring settings
             //Print(grdSet);
@@ -46,7 +47,7 @@ namespace BFRotors
             PartCompleteBeep();
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
-            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "PCDUKQQDPF");
+            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "PCDUK");
 
             CompleteBeep();
 
@@ -315,7 +316,7 @@ namespace BFRotors
 
         public static void ParallelRotorGroundRing(int[,] order, int[,] grdSet, int[,] ringSet, string cryb, string msg)
         {
-            StreamWriter file = new StreamWriter("D:\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
+            StreamWriter file = new StreamWriter("D:\\ET\\BFKeyValidity\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
 
             file.WriteLine("\ncryb: " + cryb);
             file.WriteLine("\n msg: " + msg + "\r\n");
@@ -324,7 +325,7 @@ namespace BFRotors
             Stopwatch timer = new Stopwatch();
             timer.Start();
 
-            int count = 0;  // count for all possible calculations
+            ulong count = 0;  // count for all possible calculations
 
             for (int o = 1; o < order.GetLength(0); o++)      // o = row of rotor setting
             {
@@ -356,10 +357,13 @@ namespace BFRotors
                     }
                     Task.WaitAll(tasks.ToArray());
                 }
+                file.WriteLine("\r\n\r\nmatches found: " + totalFound + " at rotor order: "+rsl+"."+rsm+"."+rsr);
+                file.Flush();
+
             }
 
-
-            file.WriteLine("\r\n\r\n" + count);
+            file.WriteLine("\r\n\r\nmatches found: "+totalFound);
+            file.WriteLine("\r\n\r\n calculations: " + count);
             timer.Stop();
             TimeSpan ts = timer.Elapsed;
 
@@ -381,6 +385,7 @@ namespace BFRotors
 
             if (decMsg.Contains(cryb.ToUpper()))
             {
+                totalFound++;
                 string line = "FOUND at rotor order: " + rsl + rsm + rsr + "  at GS: " + gsl + "." + gsm + "." + gsr;
                 line += Environment.NewLine + "decoded: " + decMsg;
                 Console.WriteLine(line);
@@ -399,12 +404,12 @@ namespace BFRotors
             // mirror position is set to "B" and entry rotor is set to "O"
             MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);
             string decMsg = ma.EncryptDecrypt(msg);
-            Console.WriteLine("msg: "+decMsg);
+            //Console.WriteLine("msg: "+decMsg);
             if (decMsg.Contains(cryb.ToUpper()))
             {
                 string line = "" + rsL + rsM + rsR + "|" + gsL + "." + gsM + "." + gsR + "|" + ringL + "." + ringM + "." + ringR;
                 line += Environment.NewLine + "decoded: " + decMsg;
-                Console.WriteLine(line);
+                //Console.WriteLine(line);
                 file.WriteLine(line);
                 file.Flush();
             }

@@ -47,7 +47,8 @@ namespace BFRotors
             PartCompleteBeep();
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
-            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "PCDUK");
+            order = new int[,]{ {0,0,0,0 }, { 0,1,2,3} };
+            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "INQTF");
 
             CompleteBeep();
 
@@ -316,7 +317,7 @@ namespace BFRotors
 
         public static void ParallelRotorGroundRing(int[,] order, int[,] grdSet, int[,] ringSet, string cryb, string msg)
         {
-            StreamWriter file = new StreamWriter("D:\\ET\\BFKeyValidity\\B_rotorrANDgrdSetANDring_" + cryb + ".txt");
+            StreamWriter file = new StreamWriter("D:\\ET\\BFKeyValidity\\B_rotorrANDgrdSetANDring_" + cryb + "NOTequalringSettings2.txt");
 
             file.WriteLine("\ncryb: " + cryb);
             file.WriteLine("\n msg: " + msg + "\r\n");
@@ -358,6 +359,7 @@ namespace BFRotors
                     Task.WaitAll(tasks.ToArray());
                 }
                 file.WriteLine("\r\n\r\nmatches found: " + totalFound + " at rotor order: "+rsl+"."+rsm+"."+rsr);
+                totalFound = 0;
                 file.Flush();
 
             }
@@ -385,7 +387,6 @@ namespace BFRotors
 
             if (decMsg.Contains(cryb.ToUpper()))
             {
-                totalFound++;
                 string line = "FOUND at rotor order: " + rsl + rsm + rsr + "  at GS: " + gsl + "." + gsm + "." + gsr;
                 line += Environment.NewLine + "decoded: " + decMsg;
                 Console.WriteLine(line);
@@ -407,6 +408,7 @@ namespace BFRotors
             //Console.WriteLine("msg: "+decMsg);
             if (decMsg.Contains(cryb.ToUpper()))
             {
+                totalFound++;
                 string line = "" + rsL + rsM + rsR + "|" + gsL + "." + gsM + "." + gsR + "|" + ringL + "." + ringM + "." + ringR;
                 line += Environment.NewLine + "decoded: " + decMsg;
                 //Console.WriteLine(line);

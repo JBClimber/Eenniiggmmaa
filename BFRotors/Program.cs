@@ -48,7 +48,7 @@ namespace BFRotors
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
             order = new int[,]{ {0,0,0,0 }, { 0,1,2,3} };
-            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "INQTF");
+            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
 
             CompleteBeep();
 
@@ -317,7 +317,7 @@ namespace BFRotors
 
         public static void ParallelRotorGroundRing(int[,] order, int[,] grdSet, int[,] ringSet, string cryb, string msg)
         {
-            StreamWriter file = new StreamWriter("D:\\ET\\BFKeyValidity\\B_rotorrANDgrdSetANDring_" + cryb + "NOTequalringSettings2.txt");
+            StreamWriter file = new StreamWriter("D:\\ET\\BFKeyValidity\\B_rotorrANDgrdSetANDring_" + cryb + "to"+msg+".txt");
 
             file.WriteLine("\ncryb: " + cryb);
             file.WriteLine("\n msg: " + msg + "\r\n");
@@ -400,7 +400,7 @@ namespace BFRotors
             //Console.WriteLine("working task ..."+rsL+":"+rsM+":"+rsR+"|"+gsL+"."+gsM+"."+gsR+"|"+ringL+"."+ringM+"."+ringR);
 
             // plug board is set to: no plugs used
-            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
+            string[] plugs = { "H", "X", "E", "Y", "L", "Z", "O", "W", "A", "B", "C", "D", "F", "G", "I", "J", "K", "M", "N", "P", "Q", "R", null, null, null, null };
 
             // mirror position is set to "B" and entry rotor is set to "O"
             MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);
@@ -410,8 +410,8 @@ namespace BFRotors
             {
                 totalFound++;
                 string line = "" + rsL + rsM + rsR + "|" + gsL + "." + gsM + "." + gsR + "|" + ringL + "." + ringM + "." + ringR;
-                line += Environment.NewLine + "decoded: " + decMsg;
-                //Console.WriteLine(line);
+                //line += Environment.NewLine + "decoded: " + decMsg;
+                ////Console.WriteLine(line);
                 file.WriteLine(line);
                 file.Flush();
             }

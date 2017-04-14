@@ -48,7 +48,10 @@ namespace BFRotors
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
             order = new int[,]{ {0,0,0,0 }, { 0,1,2,3} };
-            ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
+            //ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
+            //EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow");
+
+            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow", "D:\\ET\\BFKeyValidity\\helowEncrypted_123_");
 
             CompleteBeep();
 
@@ -374,6 +377,86 @@ namespace BFRotors
             file.Close();
         }
 
+        public static void EncryptParallelRotorGroundRingALLSETTINGS(int[,] order, int[,] grdSet, int[,] ringSet, string msg, string file)
+        {
+
+            List<string> msgList = new List<string>();
+            List<long> countList = new List<long>();
+
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
+            ulong count = 0;  // count for all possible calculations
+
+            for (int o = 1; o < order.GetLength(0); o++)      // o = row of rotor setting
+            {
+                int rsl = order[o, 1], rsm = order[o, 2], rsr = order[o, 3];
+
+                for (int g = 1; g < grdSet.GetLength(0); g++)   // g = row of the ground setting
+                {
+                    int gsl = grdSet[g, 1], gsm = grdSet[g, 2], gsr = grdSet[g, 3];
+
+                    Console.WriteLine(grdSet[g, 1] + ":" + grdSet[g, 2] + ":" + grdSet[g, 3]);
+
+                    for (int r = 1; r < ringSet.GetLength(0); r++) // r = row of the ring setting
+                    {
+                        count++;
+                        int ringl = ringSet[r, 1], ringm = ringSet[r, 2], ringr = ringSet[r, 3];
+
+                        string  enc = EncryptParallelMachineRotorGroundRing(rsl, rsm, rsr, gsl, gsm, gsr, ringl, ringm, ringr, msg);
+                        int index = msgList.IndexOf(enc);
+                        if (index >= 0)
+                        {
+                            countList[index]++;
+                            //Console.Write("."+index);
+                        }
+                        else
+                        {
+                            //Console.WriteLine(enc);
+                            msgList.Add(enc);
+                            countList.Add(1);
+                        }
+                    }
+                }
+            }
+
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+            string endRead = "BF calculation time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10;
+
+            if (msgList.Count() != countList.Count())
+            {
+                Console.WriteLine("ERROR - Arrays out of sync !!!");
+            }
+
+            StreamWriter writer = new StreamWriter(file + "_COUNT_OF_COMPLETE.txt");
+            writer.WriteLine(endRead);
+
+            timer = new Stopwatch();
+            timer.Start();
+
+            Console.WriteLine("file writing has started ...");
+
+            for (int i = 0; i < msgList.Count(); i++)
+            {
+                writer.WriteLine(msgList[i] + ":" + countList[i]);
+                writer.Flush();
+            }
+            timer.Stop();
+            ts = timer.Elapsed;
+            string endWrite = "calculation time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10;
+            writer.WriteLine(endWrite);
+
+            writer.WriteLine(count + " total calculations");
+
+            Console.WriteLine(endWrite);
+            Console.WriteLine("file writing has completed. ");
+
+            writer.Flush();
+            writer.Close();
+
+        }
+
         public static void MachineRotorGround(int rsl, int rsm, int rsr, int gsl, int gsm, int gsr, string cryb, string msg, StreamWriter file)
         {
             //Console.WriteLine("working task ..."+rsl+":"+rsm+":"+rsr+"|"+gsl+"."+gsm+"."+gsr);
@@ -400,7 +483,8 @@ namespace BFRotors
             //Console.WriteLine("working task ..."+rsL+":"+rsM+":"+rsR+"|"+gsL+"."+gsM+"."+gsR+"|"+ringL+"."+ringM+"."+ringR);
 
             // plug board is set to: no plugs used
-            string[] plugs = { "H", "X", "E", "Y", "L", "Z", "O", "W", "A", "B", "C", "D", "F", "G", "I", "J", "K", "M", "N", "P", "Q", "R", null, null, null, null };
+            //string[] plugs = { "H", "X", "E", "Y", "L", "Z", "O", "W", "A", "B", "C", "D", "F", "G", "I", "J", "K", "M", "N", "P", "Q", "R", null, null, null, null };
+            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
 
             // mirror position is set to "B" and entry rotor is set to "O"
             MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);
@@ -415,6 +499,82 @@ namespace BFRotors
                 file.WriteLine(line);
                 file.Flush();
             }
+        }
+
+        public static string EncryptParallelMachineRotorGroundRing(int rsL, int rsM, int rsR, int gsL, int gsM, int gsR, int ringL, int ringM, int ringR, string msg)
+        {   // encrypts the message for each rotor order for all possible settings of rind and ground
+
+            // plug board is set to: no plugs used
+            //string[] plugs = { "H", "X", "E", "Y", "L", "Z", "O", "W", "A", "B", "C", "D", "F", "G", "I", "J", "K", "M", "N", "P", "Q", "R", null, null, null, null };
+            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
+
+            // mirror position is set to "B" and entry rotor is set to "O"
+            MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);
+            string decMsg = ma.EncryptDecrypt(msg);
+
+            return decMsg; // +" |" + rsL + rsM + rsR + "|" + gsL + "." + gsM + "." + gsR + "|" + ringL + "." + ringM + "." + ringR;
+
+        }
+
+        public static void CalculateFrequencyOfEncryption(string file)
+        {
+            StreamReader reader = new StreamReader(file);
+            string line;
+            int i;
+            List<string> msg = new List<string>();
+            List<uint> count = new List<uint>();
+
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine("file reading has started ...");
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                i = msg.IndexOf(line);
+                if (i >=0)
+                {
+                    count[i]++;// = count[i]+1;
+                }
+                else
+                {
+                    msg.Add(line);
+                    count.Add(1);
+                }
+            }
+
+            timer.Stop();
+            TimeSpan ts = timer.Elapsed;
+            string endRead = "reading time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10;
+            reader.Close();
+            Console.WriteLine(endRead);
+            Console.WriteLine("file reading has completed. ");
+
+            if (msg.Count() != count.Count())
+            {
+                Console.WriteLine("error in reading file !!!\r\nmgsArray count not equal to countArray count ");
+            }
+
+
+            StreamWriter writer = new StreamWriter(file+"_COUNT_OF.txt");
+            writer.WriteLine(endRead);
+            timer = new Stopwatch();
+            timer.Start();
+            Console.WriteLine("file writing has started ...");
+
+            for (i=0; i<msg.Count(); i++)
+            {
+                writer.WriteLine(msg[i]+": "+count[i]);
+                writer.Flush();
+            }
+            timer.Stop();
+            ts = timer.Elapsed;
+            string endWrite = "calculation time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10;
+            writer.WriteLine(endWrite);
+            Console.WriteLine(endWrite);
+            Console.WriteLine("file writing has completed. ");
+
+            writer.Flush();
+            writer.Close();
         }
 
         public static int[,] CreateRotorOrder(int o)

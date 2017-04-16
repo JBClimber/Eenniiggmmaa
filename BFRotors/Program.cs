@@ -380,8 +380,9 @@ namespace BFRotors
         public static void EncryptParallelRotorGroundRingALLSETTINGS(int[,] order, int[,] grdSet, int[,] ringSet, string msg, string file)
         {
 
-            List<string> msgList = new List<string>();
-            List<long> countList = new List<long>();
+            List<string> msgList = new List<string>();      // second version
+            List<long> countList = new List<long>();        // second version
+            List<string> firstList = new List<string>();    // third version
 
             Stopwatch timer = new Stopwatch();
             timer.Start();
@@ -395,8 +396,8 @@ namespace BFRotors
                 for (int g = 1; g < grdSet.GetLength(0); g++)   // g = row of the ground setting
                 {
                     int gsl = grdSet[g, 1], gsm = grdSet[g, 2], gsr = grdSet[g, 3];
-
-                    Console.WriteLine(grdSet[g, 1] + ":" + grdSet[g, 2] + ":" + grdSet[g, 3]);
+                    ulong countFA = 0;
+                    //Console.WriteLine(grdSet[g, 1] + ":" + grdSet[g, 2] + ":" + grdSet[g, 3]);
 
                     for (int r = 1; r < ringSet.GetLength(0); r++) // r = row of the ring setting
                     {
@@ -413,10 +414,14 @@ namespace BFRotors
                         else
                         {
                             //Console.WriteLine(enc);
+                            //Console.Write("*");
+                            countFA++;
                             msgList.Add(enc);
+                            firstList.Add(gsl+"."+gsm+"."+gsr+":"+ringl+"."+ringm+"."+ringr);   // third version
                             countList.Add(1);
                         }
                     }
+                    Console.WriteLine(gsl+"."+gsm+"."+gsr+":"+countFA);  // third version
                 }
             }
 
@@ -424,12 +429,12 @@ namespace BFRotors
             TimeSpan ts = timer.Elapsed;
             string endRead = "BF calculation time at " + ts.Days + ":" + ts.Hours + ":" + ts.Minutes + ":" + ts.Seconds + "." + ts.Milliseconds / 10;
 
-            if (msgList.Count() != countList.Count())
+            if (msgList.Count() != countList.Count() || msgList.Count() != firstList.Count() || countList.Count() != firstList.Count())
             {
                 Console.WriteLine("ERROR - Arrays out of sync !!!");
             }
 
-            StreamWriter writer = new StreamWriter(file + "_COUNT_OF_COMPLETE.txt");
+            StreamWriter writer = new StreamWriter(file + "_COUNT_AND_FA.txt");
             writer.WriteLine(endRead);
 
             timer = new Stopwatch();
@@ -439,7 +444,7 @@ namespace BFRotors
 
             for (int i = 0; i < msgList.Count(); i++)
             {
-                writer.WriteLine(msgList[i] + ":" + countList[i]);
+                writer.WriteLine(msgList[i] + ":" + countList[i] + ":" + firstList[i]);
                 writer.Flush();
             }
             timer.Stop();

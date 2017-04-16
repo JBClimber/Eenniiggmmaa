@@ -47,11 +47,11 @@ namespace BFRotors
             PartCompleteBeep();
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
-            order = new int[,]{ {0,0,0,0 }, { 0,1,2,3} };
+            order = new int[,]{ {0,0,0,0 }, { 0,1,2,4} };
             //ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
             //EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow");
 
-            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow", "D:\\ET\\BFKeyValidity\\helowEncrypted_123_");
+            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow", "D:\\ET\\BFKeyValidity\\helowEncrypted_124_");
 
             CompleteBeep();
 

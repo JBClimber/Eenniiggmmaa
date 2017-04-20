@@ -47,11 +47,11 @@ namespace BFRotors
             PartCompleteBeep();
             ParallelRotorGround(order, grdSet, "sunny", "JZTPBMCJMIITBRJBJM");*/
 
-            order = new int[,]{ {0,0,0,0 }, { 0,1,2,3} };
+            order = new int[,]{ {0,0,0,0 }, { 0,2,4,5} };
             //ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
             //EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow");
 
-            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "dream", "D:\\ET\\BFKeyValidity\\dreamEncrypted_123_");
+            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "edpud", "D:\\ET\\BFKeyValidity\\edpudEncrypted_245_");
 
             CompleteBeep();
 
@@ -511,7 +511,8 @@ namespace BFRotors
 
             // plug board is set to: no plugs used
             //string[] plugs = { "H", "X", "E", "Y", "L", "Z", "O", "W", "A", "B", "C", "D", "F", "G", "I", "J", "K", "M", "N", "P", "Q", "R", null, null, null, null };
-            string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
+            string[] plugs = { "A", "V", "B", "S", "C", "G", "D", "L", "F", "U", "H", "Z", "I", "N", "K", "M", "O", "W", "R", "X",  null, null, null, null, null, null };
+            //string[] plugs = { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null };
 
             // mirror position is set to "B" and entry rotor is set to "O"
             MachineRun ma = new MachineRun("B", new Rotor(rsL, gsL, ringL), new Rotor(rsM, gsM, ringM), new Rotor(rsR, gsR, ringR), "O", plugs);

@@ -51,7 +51,7 @@ namespace BFRotors
             //ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
             //EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow");
 
-            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow", "D:\\ET\\BFKeyValidity\\helowEncrypted_123_");
+            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "dream", "D:\\ET\\BFKeyValidity\\dreamEncrypted_123_");
 
             CompleteBeep();
 
@@ -434,7 +434,7 @@ namespace BFRotors
                 Console.WriteLine("ERROR - Arrays out of sync !!!");
             }
 
-            StreamWriter writer = new StreamWriter(file + "_COUNT_AND_FA.txt");
+            StreamWriter writer = new StreamWriter(file + "COUNT_AND_FA.txt");
             writer.WriteLine(endRead);
 
             timer = new Stopwatch();

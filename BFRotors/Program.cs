@@ -51,7 +51,7 @@ namespace BFRotors
             //ParallelRotorGroundRing(order, grdSet, ringSet, "hello", "CXKYJ");
             //EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "helow");
 
-            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "edpud", "D:\\ET\\BFKeyValidity\\edpudEncrypted_245_");
+            EncryptParallelRotorGroundRingALLSETTINGS(order, grdSet, ringSet, "aufkl", "D:\\ET\\BFKeyValidity\\aufklEncrypted_245_");
 
             CompleteBeep();
 

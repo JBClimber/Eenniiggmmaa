@@ -65,34 +65,35 @@ namespace Enigma.Machine
             {
                 TurnRotor();
 
-
-                //Console.WriteLine("\n\n\nR Rotor:\n" + rRotor);
-                //Console.WriteLine("M Rotor\n" + mRotor);
-                //Console.WriteLine("L Rotor\n" + lRotor);
-                //Console.WriteLine(" Mirror\n" + mirror);
-                //Console.WriteLine("  Plugs\n" + pBoard);
+                //if (i==0) {
+                    Console.WriteLine("\n\n\nR Rotor:\n" + rRotor);
+                    Console.WriteLine("M Rotor\n" + mRotor);
+                    Console.WriteLine("L Rotor\n" + lRotor);
+                    Console.WriteLine(" Mirror\n" + mirror);
+                    Console.WriteLine("  Plugs\n" + pBoard);
+                //}
 
                 String a = letArray[i].ToString();
                 //Console.WriteLine("processing:-"+a+"-");
-                //Console.Write("P Board in: " + a);
+                Console.Write("P Board in: " + a);
                 x = pBoard.LetterIn(a);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("E Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("E Rotor in: " + lc.GetNumLet(x) + x);
                 x = eRotor.In(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("R Rotor in: "+ lc.GetNumLet(x) + x);
+                Console.Write("R Rotor in: "+ lc.GetNumLet(x) + x);
                 x = rRotor.In(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("M Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("M Rotor in: " + lc.GetNumLet(x) + x);
                 x = mRotor.In(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("L Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("L Rotor in: " + lc.GetNumLet(x) + x);
                 x = lRotor.In(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
                 if (mType == true)
                 {
                     x = M4Rotor.In(x);
@@ -103,24 +104,24 @@ namespace Enigma.Machine
                 {
                     //Console.Write(" Mirror in: " + lc.GetNumLet(x) + x);
                     x = mirror.getInOut(x);
-                    //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                    Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
                 }
 
-                //Console.Write("L Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("L Rotor in: " + lc.GetNumLet(x) + x);
                 x = lRotor.Out(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("M Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("M Rotor in: " + lc.GetNumLet(x) + x);
                 x = mRotor.Out(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("R Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("R Rotor in: " + lc.GetNumLet(x) + x);
                 x = rRotor.Out(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
-                //Console.Write("E Rotor in: " + lc.GetNumLet(x) + x);
+                Console.Write("E Rotor in: " + lc.GetNumLet(x) + x);
                 x = eRotor.Out(x);
-                //Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
+                Console.WriteLine("  out: " + lc.GetNumLet(x) + x);
 
                 //Console.Write("P Board in: " + lc.GetNumLet(x) + x);
                 cipher += pBoard.LetterOut(x);
